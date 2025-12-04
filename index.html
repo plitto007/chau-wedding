@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation | Ngọc Châu & Việt Anh</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- Cấu hình Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'wedding-gold': '#E8C675', 
+                        'wedding-pink': '#FDE8E8',
+                        'wedding-dark': '#2C2C2C',
+                        'cream': '#FDFBF7',
+                    },
+                    fontFamily: {
+                        'script': ['"Great Vibes"', 'cursive'],
+                        'serif': ['"Cormorant Garamond"', 'serif'],
+                        'sans': ['"Montserrat"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* --- Global Styles & Animations --- */
+        body {
+            background-color: #FDFBF7;
+            overflow-x: hidden;
+        }
+
+        /* Hiệu ứng Parallax cho Hero */
+        .parallax-bg {
+            background-image: url('bgr.jpg');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Custom Text Shadow */
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Hiệu ứng Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hoa rơi */
+        .petal {
+            position: fixed;
+            top: -10%;
+            background-color: #ffb7b2;
+            width: 15px;
+            height: 15px;
+            border-radius: 15px 0px;
+            opacity: 0.8;
+            z-index: 9999;
+            pointer-events: none;
+            animation: falling linear infinite;
+        }
+        @keyframes falling {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+            100% { transform: translate(100px, 100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Vinyl Record Animation */
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: spin-slow 4s linear infinite;
+        }
+
+        /* Vinyl Texture - Tạo vân đĩa chân thực hơn */
+        .vinyl-texture {
+            background: repeating-radial-gradient(
+                #111 0, 
+                #111 2px, 
+                #333 3px, 
+                #333 4px
+            );
+        }
+        
+        /* Hiệu ứng nốt nhạc bay lên */
+        @keyframes float-note {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-60px) rotate(20deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+        
+        .music-note {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            color: #E8C675; /* wedding-gold */
+            pointer-events: none;
+            animation: float-note 2s ease-out forwards;
+            z-index: 40;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #C5A059; border-radius: 4px; }
+
+        /* Lightbox transition optimized */
+        .lightbox-fade { transition: opacity 0.2s ease-in-out; }
+    </style>
+</head>
+<body class="text-wedding-dark antialiased font-serif">
+
+    <!-- Music Player Control (Updated Vinyl Style) -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-center justify-center">
+        <!-- Container cho nốt nhạc bay -->
+        <div id="note-container" class="absolute w-full h-full pointer-events-none"></div>
+
+        <!-- Nút bấm mô phỏng đĩa than -->
+        <button id="music-toggle" class="group relative w-20 h-20 rounded-full flex items-center justify-center bg-transparent focus:outline-none transform hover:scale-105 transition-transform duration-300 shadow-2xl">
+            
+            <!-- Phần đĩa than (Vinyl) -->
+            <div id="vinyl-record" class="absolute inset-0 rounded-full vinyl-texture border-4 border-wedding-gold shadow-lg flex items-center justify-center overflow-hidden">
+                <!-- Ánh sáng phản chiếu trên mặt đĩa -->
+                <div class="absolute inset-0 bg-gradient-to-tr from-white/20 via-transparent to-transparent pointer-events-none z-10"></div>
+                
+                <!-- Tâm đĩa (Label) -->
+                <div class="absolute w-8 h-8 rounded-full bg-wedding-pink border-2 border-wedding-gold flex items-center justify-center z-20 shadow-inner">
+                    <div class="w-1.5 h-1.5 rounded-full bg-black"></div>
+                </div>
+            </div>
+            
+            <!-- Icon điều khiển (nằm trên cùng) -->
+            <div id="control-icon" class="relative z-30 text-white text-2xl drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] opacity-90 group-hover:opacity-100 transition-opacity">
+                <i class="fas fa-music"></i>
+            </div>
+        </button>
+        <audio id="bg-music"></audio>
+    </div>
+
+    <!-- Hoa rơi container -->
+    <div id="petals-container"></div>
+
+    <!-- 1. HERO SECTION (Full Screen) -->
+    <header class="parallax-bg h-screen relative flex items-center justify-center text-center px-4">
+        <div class="absolute inset-0 bg-black/60"></div> 
+        
+        <div class="relative z-10 text-white animate-fade-in-up">
+            <p class="text-xl md:text-2xl tracking-[0.2em] uppercase font-light mb-4 reveal active">Save The Date</p>
+            
+            <h1 class="font-script text-6xl md:text-8xl lg:text-9xl mb-2 text-wedding-pink text-glow reveal active" style="transition-delay: 0.2s;">
+                Ngọc Châu
+            </h1>
+            <div class="text-4xl md:text-5xl my-2 font-light text-wedding-gold text-glow reveal active" style="transition-delay: 0.4s;">&</div>
+            <h1 class="font-script text-6xl md:text-8xl lg:text-9xl mb-8 text-wedding-pink text-glow reveal active" style="transition-delay: 0.6s;">
+                Việt Anh
+            </h1>
+
+            <div class="inline-block border-t border-b border-white/50 py-4 px-8 mt-6 backdrop-blur-sm bg-white/10 rounded-lg reveal active" style="transition-delay: 0.8s;">
+                <!-- CẬP NHẬT NGÀY THÁNG -->
+                <p class="text-2xl md:text-3xl font-semibold text-shadow-md">20 . 12 . 2025</p>
+                <p class="text-sm md:text-base mt-2 tracking-widest uppercase text-shadow-md">White Palace, TP. Hồ Chí Minh</p>
+            </div>
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-white/80">
+            <i class="fas fa-chevron-down text-2xl"></i>
+        </div>
+    </header>
+
+    <!-- 2. INTRO & QUOTE -->
+    <section class="py-20 md:py-32 px-6 text-center bg-cream relative overflow-hidden">
+        <!-- Decoration BG -->
+        <div class="absolute top-0 left-0 w-32 h-32 border-t-2 border-l-2 border-wedding-gold opacity-30 rounded-tl-3xl m-8"></div>
+        <div class="absolute bottom-0 right-0 w-32 h-32 border-b-2 border-r-2 border-wedding-gold opacity-30 rounded-br-3xl m-8"></div>
+
+        <div class="max-w-3xl mx-auto reveal">
+            <i class="fas fa-quote-left text-4xl text-wedding-gold mb-6 opacity-50"></i>
+            <p class="text-2xl md:text-3xl italic leading-relaxed text-gray-700 mb-6">
+                "Hạnh phúc không phải là điểm đến, mà là hành trình chúng ta đi cùng nhau. 
+                Cảm ơn đời đã mang ta đến bên nhau để cùng viết nên câu chuyện cổ tích này."
+            </p>
+            <div class="w-24 h-1 bg-wedding-gold mx-auto my-8"></div>
+            <p class="font-sans text-sm tracking-widest text-gray-500 uppercase">Trân trọng kính mời quý khách đến dự lễ thành hôn của chúng tôi</p>
+        </div>
+    </section>
+
+    <!-- 3. COUNTDOWN -->
+    <section class="py-16 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] bg-wedding-pink/20">
+        <div class="container mx-auto px-4 text-center reveal">
+            <h2 class="font-script text-5xl md:text-6xl text-wedding-dark mb-12">Cùng đếm ngược giây phút hạnh phúc</h2>
+            
+            <div id="countdown" class="flex flex-wrap justify-center gap-6 md:gap-10">
+                <!-- Item -->
+                <div class="bg-white/80 backdrop-blur rounded-full w-24 h-24 md:w-32 md:h-32 flex flex-col justify-center items-center shadow-xl border border-white">
+                    <span id="days" class="text-3xl md:text-4xl font-bold text-wedding-gold">00</span>
+                    <span class="text-xs uppercase tracking-wide mt-1">Ngày</span>
+                </div>
+                <div class="bg-white/80 backdrop-blur rounded-full w-24 h-24 md:w-32 md:h-32 flex flex-col justify-center items-center shadow-xl border border-white">
+                    <span id="hours" class="text-3xl md:text-4xl font-bold text-wedding-gold">00</span>
+                    <span class="text-xs uppercase tracking-wide mt-1">Giờ</span>
+                </div>
+                <div class="bg-white/80 backdrop-blur rounded-full w-24 h-24 md:w-32 md:h-32 flex flex-col justify-center items-center shadow-xl border border-white">
+                    <span id="minutes" class="text-3xl md:text-4xl font-bold text-wedding-gold">00</span>
+                    <span class="text-xs uppercase tracking-wide mt-1">Phút</span>
+                </div>
+                <div class="bg-white/80 backdrop-blur rounded-full w-24 h-24 md:w-32 md:h-32 flex flex-col justify-center items-center shadow-xl border border-white">
+                    <span id="seconds" class="text-3xl md:text-4xl font-bold text-wedding-gold">00</span>
+                    <span class="text-xs uppercase tracking-wide mt-1">Giây</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. EVENTS (Timeline Style) -->
+    <section class="py-20 md:py-32 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="font-script text-5xl md:text-7xl text-center text-wedding-gold mb-20 reveal">Sự Kiện Chính</h2>
+            
+            <div class="relative max-w-4xl mx-auto">
+                <!-- Vertical Line -->
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gray-200 hidden md:block"></div>
+
+                <!-- Event 1 -->
+                <div class="relative md:flex justify-between items-center mb-16 md:mb-24 reveal">
+                    <div class="md:w-5/12 text-center md:text-right order-1 pr-0 md:pr-10">
+                        <div class="inline-block p-2 border border-wedding-gold rounded-full mb-4">
+                            <i class="fas fa-glass-cheers text-2xl text-wedding-gold w-8 h-8 flex items-center justify-center"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-2 text-gray-800">Lễ Gia Tiên</h3>
+                        <!-- CẬP NHẬT NGÀY THÁNG -->
+                        <p class="font-sans text-wedding-gold font-bold mb-2">09:00 AM - 20/12/2025</p>
+                        <p class="text-gray-600">Tư gia nhà gái. <br>Nghi thức truyền thống ấm cúng cùng gia đình.</p>
+                    </div>
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-wedding-gold rounded-full border-4 border-white shadow-md z-10"></div>
+                    <div class="md:w-5/12 order-2 mt-6 md:mt-0 pl-0 md:pl-10">
+                        <img src="https://images.unsplash.com/photo-1532306286745-c54c379207e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Tea Ceremony" class="rounded-lg shadow-lg w-full h-64 object-cover hover:scale-105 transition duration-500">
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div class="relative md:flex justify-between items-center reveal">
+                    <div class="md:w-5/12 order-2 md:order-1 mt-6 md:mt-0 pr-0 md:pr-10">
+                         <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Wedding Party" class="rounded-lg shadow-lg w-full h-64 object-cover hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-wedding-gold rounded-full border-4 border-white shadow-md z-10"></div>
+                    <div class="md:w-5/12 text-center md:text-left order-1 md:order-2 pl-0 md:pl-10">
+                        <div class="inline-block p-2 border border-wedding-gold rounded-full mb-4">
+                            <i class="fas fa-utensils text-2xl text-wedding-gold w-8 h-8 flex items-center justify-center"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-2 text-gray-800">Tiệc Cưới</h3>
+                        <!-- CẬP NHẬT NGÀY THÁNG -->
+                        <p class="font-sans text-wedding-gold font-bold mb-2">16:00 PM - 20/12/2025</p>
+                        <p class="text-gray-600 mb-4">Trung tâm hội nghị White Palace.<br>Kính mời quý khách tham dự bữa tiệc thân mật.</p>
+                        <a href="#" class="inline-block px-6 py-2 border border-wedding-dark hover:bg-wedding-dark hover:text-white transition duration-300 rounded-full text-sm uppercase tracking-wider">Xem Bản Đồ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. GALLERY (Artistic Polaroid Style - Animated) -->
+    <section class="py-24 bg-cream overflow-hidden">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="font-script text-5xl md:text-6xl text-center text-wedding-dark mb-4 reveal">Khoảnh Khắc Đẹp</h2>
+            <p class="text-center text-gray-500 mb-16 font-sans italic reveal">Lưu giữ từng giây phút yêu thương</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-6 auto-rows-[280px] mb-12">
+                
+                <!-- Ảnh 1: Lớn - Nghiêng trái -->
+                <div class="reveal md:col-span-2 md:row-span-2 relative group z-0 hover:z-20 transition-all duration-500 cursor-pointer" onclick="openLightboxFromId('gallery-img-1')">
+                    <div class="bg-white p-4 shadow-xl transform -rotate-2 group-hover:rotate-0 group-hover:scale-105 transition-all duration-500 h-full">
+                        <img id="gallery-img-1" src="images/image_1.jpg" class="w-full h-full object-cover transition-all duration-1000">
+                    </div>
+                </div>
+
+                <!-- Ảnh 2: Nhỏ - Nghiêng phải -->
+                <div class="reveal md:col-span-1 md:row-span-1 relative group z-0 hover:z-20 transition-all duration-500 mt-6 md:mt-0 cursor-pointer" onclick="openLightboxFromId('gallery-img-2')">
+                    <div class="bg-white p-3 shadow-lg transform rotate-3 group-hover:rotate-0 group-hover:scale-110 transition-all duration-500 h-full">
+                        <img id="gallery-img-2" src="images/image_2.jpg" class="w-full h-full object-cover transition-all duration-1000">
+                    </div>
+                </div>
+
+                <!-- Ảnh 3: Cao - Nghiêng nhẹ trái (offset) -->
+                <div class="reveal md:col-span-1 md:row-span-2 relative group z-0 hover:z-20 transition-all duration-500 md:translate-y-12 cursor-pointer" onclick="openLightboxFromId('gallery-img-3')">
+                    <div class="bg-white p-3 shadow-lg transform -rotate-1 group-hover:rotate-0 group-hover:scale-105 transition-all duration-500 h-full">
+                        <img id="gallery-img-3" src="images/image_3.jpg" class="w-full h-full object-cover transition-all duration-1000">
+                    </div>
+                </div>
+
+                <!-- Ảnh 4: Nhỏ - Nghiêng trái mạnh -->
+                <div class="reveal md:col-span-1 md:row-span-1 relative group z-0 hover:z-20 transition-all duration-500 cursor-pointer" onclick="openLightboxFromId('gallery-img-4')">
+                    <div class="bg-white p-3 shadow-lg transform -rotate-3 group-hover:rotate-0 group-hover:scale-110 transition-all duration-500 h-full">
+                        <img id="gallery-img-4" src="images/image_4.jpg" class="w-full h-full object-cover transition-all duration-1000">
+                    </div>
+                </div>
+
+                 <!-- Ảnh 5: Dài vừa phải (2 cột) -->
+                 <div class="reveal md:col-span-2 md:row-span-1 relative group z-0 hover:z-20 transition-all duration-500 cursor-pointer" onclick="openLightboxFromId('gallery-img-5')">
+                    <div class="bg-white p-4 shadow-xl transform rotate-1 group-hover:rotate-0 group-hover:scale-105 transition-all duration-500 h-full">
+                        <img id="gallery-img-5" src="images/image_5.jpg" class="w-full h-full object-cover transition-all duration-1000">
+                    </div>
+                </div>
+
+                 <!-- Ảnh 6: Vuông nhỏ (1 cột) -->
+                 <div class="reveal md:col-span-1 md:row-span-1 relative group z-0 hover:z-20 transition-all duration-500 mt-6 md:mt-0 cursor-pointer" onclick="openLightboxFromId('gallery-img-6')">
+                    <div class="bg-white p-3 shadow-lg transform -rotate-2 group-hover:rotate-0 group-hover:scale-110 transition-all duration-500 h-full">
+                        <img id="gallery-img-6" src="images/image_6.jpg" class="w-full h-full object-cover transition-all duration-1000">
+                    </div>
+                </div>
+
+                <!-- Ảnh 7: Vuông nhỏ (1 cột) -->
+                <div class="reveal md:col-span-1 md:row-span-1 relative group z-0 hover:z-20 transition-all duration-500 mt-6 md:mt-0 cursor-pointer" onclick="openLightboxFromId('gallery-img-7')">
+                    <div class="bg-white p-3 shadow-lg transform rotate-2 group-hover:rotate-0 group-hover:scale-110 transition-all duration-500 h-full">
+                        <img id="gallery-img-7" src="images/image_7.jpg" class="w-full h-full object-cover transition-all duration-1000">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Button Xem Tất Cả Ảnh -->
+            <button onclick="openLightbox(0)" class="inline-block border-2 border-wedding-gold text-wedding-dark hover:bg-wedding-gold hover:text-white py-3 px-8 rounded-full font-sans tracking-widest text-sm uppercase transition duration-300 transform hover:scale-105 reveal">
+                Xem Tất Cả Ảnh
+            </button>
+        </div>
+    </section>
+
+    <!-- 6. RSVP FORM -->
+    <section class="py-20 bg-white relative">
+        <div class="container mx-auto px-4 max-w-2xl text-center reveal">
+            <div class="border-double border-4 border-wedding-pink p-8 md:p-12 rounded-xl bg-cream shadow-2xl relative">
+                <!-- Decoration -->
+                <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-white px-4">
+                    <i class="fas fa-heart text-4xl text-wedding-pink"></i>
+                </div>
+
+                <h2 class="font-script text-5xl text-wedding-gold mb-6 mt-4">Xác Nhận Tham Dự</h2>
+                <p class="text-gray-600 mb-8">Sự hiện diện của bạn là niềm vinh hạnh của chúng tôi.</p>
+                
+                <form class="space-y-4 text-left font-sans" onsubmit="event.preventDefault(); document.getElementById('success-msg').classList.remove('hidden'); this.classList.add('hidden');">
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Tên của bạn</label>
+                        <input type="text" class="w-full border-b-2 border-gray-200 bg-transparent py-2 focus:outline-none focus:border-wedding-gold transition" placeholder="Nguyễn Văn A" required>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Số khách</label>
+                            <select class="w-full border-b-2 border-gray-200 bg-transparent py-2 focus:outline-none focus:border-wedding-gold transition">
+                                <option>1 Người</option>
+                                <option>2 Người</option>
+                                <option>3 Người</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Sự kiện</label>
+                            <select class="w-full border-b-2 border-gray-200 bg-transparent py-2 focus:outline-none focus:border-wedding-gold transition">
+                                <option>Dự tiệc cưới</option>
+                                <option>Dự lễ gia tiên</option>
+                                <option>Tham dự cả hai</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="pt-6 text-center">
+                        <button class="bg-wedding-dark text-white px-10 py-3 rounded-full hover:bg-wedding-gold transition duration-300 shadow-lg transform hover:-translate-y-1">
+                            Gửi Xác Nhận
+                        </button>
+                    </div>
+                </form>
+                
+                <div id="success-msg" class="hidden text-center py-10">
+                    <i class="fas fa-check-circle text-5xl text-green-500 mb-4"></i>
+                    <p class="text-xl font-bold text-gray-800">Cảm ơn bạn!</p>
+                    <p class="text-gray-600">Chúng tôi đã nhận được xác nhận của bạn.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FOOTER -->
+    <footer class="bg-wedding-dark text-white py-12 text-center">
+        <h2 class="font-script text-4xl mb-4 text-wedding-pink">Ngọc Châu & Việt Anh</h2>
+        <div class="flex justify-center space-x-6 mb-6">
+            <a href="#" class="hover:text-wedding-gold transition"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="hover:text-wedding-gold transition"><i class="fab fa-instagram"></i></a>
+        </div>
+        <p class="text-xs text-gray-400 font-sans tracking-widest uppercase">Thank you for being part of our journey</p>
+    </footer>
+
+    <!-- LIGHTBOX MODAL (Optimized for performance) -->
+    <!-- Removed backdrop-blur-sm class for better performance on transitions -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/95 hidden flex items-center justify-center lightbox-fade opacity-0">
+        
+        <!-- Close Button -->
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white/70 hover:text-white text-4xl z-[110] transition-colors p-2">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Navigation Buttons -->
+        <button onclick="navigateLightbox(-1)" class="absolute left-2 md:left-10 text-white/50 hover:text-white text-4xl md:text-6xl z-[110] p-4 transition-colors">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        
+        <button onclick="navigateLightbox(1)" class="absolute right-2 md:right-10 text-white/50 hover:text-white text-4xl md:text-6xl z-[110] p-4 transition-colors">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Image Container -->
+        <div class="relative max-w-[95vw] max-h-[95vh]">
+            <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] object-contain shadow-2xl border-4 border-white/10 rounded-sm transition-opacity duration-300">
+            <div class="absolute bottom-[-30px] left-0 w-full text-center text-white/60 font-sans text-sm tracking-widest">
+                <span id="lightbox-counter">1 / 12</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // 1. SCROLL REVEAL ANIMATION
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        });
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+        // 2. COUNTDOWN TIMER (CẬP NHẬT NGÀY CƯỚI: 20/12/2025)
+        const weddingDate = new Date("2025-12-20T16:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = days.toString().padStart(2, '0');
+                document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+                document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+                document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+            } else {
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // 3. FALLING PETALS EFFECT
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.animationDuration = Math.random() * 3 + 2 + 's';
+            petal.style.opacity = Math.random();
+            petal.style.backgroundColor = ['#ffc0cb', '#ffb7b2', '#ffd1dc'][Math.floor(Math.random() * 3)];
+            
+            document.getElementById('petals-container').appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, 5000);
+        }
+        setInterval(createPetal, 300);
+
+        // 4. MUSIC PLAYER (UPDATED FOR STYLIZED VINYL RECORD)
+        const musicBtn = document.getElementById('music-toggle');
+        const vinylRecord = document.getElementById('vinyl-record');
+        const controlIcon = document.getElementById('control-icon');
+        const audio = document.getElementById('bg-music');
+        const noteContainer = document.getElementById('note-container');
+        let isPlaying = false;
+        let noteInterval;
+
+        const playlist = [
+            'musics/music_1.mp3',
+            'musics/music_2.mp3', 
+            'musics/music_3.mp3'
+        ];
+
+        // Hàm cập nhật giao diện (Quay đĩa / Dừng quay)
+        function updateMusicUI(playing) {
+            if (playing) {
+                vinylRecord.classList.add('animate-spin-slow');
+                controlIcon.innerHTML = '<i class="fas fa-pause"></i>';
+                if (!noteInterval) noteInterval = setInterval(spawnNotes, 800);
+            } else {
+                vinylRecord.classList.remove('animate-spin-slow');
+                controlIcon.innerHTML = '<i class="fas fa-music"></i>';
+                clearInterval(noteInterval);
+                noteInterval = null;
+            }
+        }
+
+        // Hàm phát một bài ngẫu nhiên và trả về Promise
+        function playRandomSong() {
+            const randomIndex = Math.floor(Math.random() * playlist.length);
+            audio.src = playlist[randomIndex];
+            return audio.play();
+        }
+
+        // Hàm tạo nốt nhạc bay
+        function spawnNotes() {
+            const note = document.createElement('div');
+            note.innerHTML = '<i class="fas fa-music"></i>';
+            note.className = 'music-note text-2xl'; 
+            const randomX = (Math.random() - 0.5) * 40; 
+            note.style.left = `calc(50% + ${randomX}px)`;
+            noteContainer.appendChild(note);
+            setTimeout(() => { note.remove(); }, 2000); 
+        }
+
+        // Xử lý nút bấm thủ công
+        musicBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Ngăn sự kiện click lan ra document
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                updateMusicUI(false);
+            } else {
+                // Nếu chưa có bài (do chưa autoplay được) hoặc đã hết
+                if (!audio.src || audio.src === window.location.href) { 
+                    playRandomSong().then(() => {
+                        isPlaying = true;
+                        updateMusicUI(true);
+                    });
+                } else {
+                    audio.play().then(() => {
+                        isPlaying = true;
+                        updateMusicUI(true);
+                    });
+                }
+            }
+        });
+
+        audio.addEventListener('ended', () => {
+             playRandomSong();
+        });
+        
+        // --- LOGIC AUTOPLAY THÔNG MINH ---
+        function attemptAutoplay() {
+            playRandomSong()
+                .then(() => {
+                    // Autoplay thành công
+                    isPlaying = true;
+                    updateMusicUI(true);
+                    console.log("Autoplay success!");
+                })
+                .catch(error => {
+                    // Autoplay thất bại (do trình duyệt chặn)
+                    console.log("Autoplay blocked. Waiting for user interaction.");
+                    
+                    // Gài sự kiện: Click bất cứ đâu vào trang sẽ bật nhạc
+                    const enableAudio = () => {
+                        if (!isPlaying) {
+                            playRandomSong().then(() => {
+                                isPlaying = true;
+                                updateMusicUI(true);
+                            });
+                        }
+                        // Xóa sự kiện sau khi đã kích hoạt để không bị lặp lại
+                        document.removeEventListener('click', enableAudio);
+                        document.removeEventListener('touchstart', enableAudio);
+                        document.removeEventListener('scroll', enableAudio);
+                    };
+
+                    document.addEventListener('click', enableAudio);
+                    document.addEventListener('touchstart', enableAudio); // Hỗ trợ mobile
+                });
+        }
+
+        // Gọi hàm thử autoplay ngay khi tải trang
+        window.addEventListener('load', attemptAutoplay);
+
+        // 5. GALLERY AUTO SLIDE
+        const galleryConfig = [
+            { 
+                id: 'gallery-img-1', 
+                images: [
+                    { src: 'images/image_1.jpg', pos: 'object-center' },
+                    { src: 'images/image_7.jpg', pos: 'object-top' } 
+                ],
+                hiddenClass: ['opacity-0', 'scale-90'] 
+            },
+            { 
+                id: 'gallery-img-2', 
+                images: [
+                    { src: 'images/image_2.jpg', pos: 'object-center' },
+                    { src: 'images/image_8.jpg', pos: 'object-center' }
+                ],
+                hiddenClass: ['opacity-0', 'rotate-12'] 
+            },
+            { 
+                id: 'gallery-img-3', 
+                images: [
+                    { src: 'images/image_3.jpg', pos: 'object-center' },
+                    { src: 'images/image_9.jpg', pos: 'object-center' }
+                ],
+                hiddenClass: ['opacity-0', 'translate-y-4'] 
+            },
+            { 
+                id: 'gallery-img-4', 
+                images: [
+                    { src: 'images/image_4.jpg', pos: 'object-center' },
+                    { src: 'images/image_10.jpg', pos: 'object-center' }
+                ],
+                hiddenClass: ['opacity-0', 'blur-sm'] 
+            },
+            { 
+                id: 'gallery-img-5', 
+                images: [
+                    { src: 'images/image_5.jpg', pos: 'object-top' },   
+                    { src: 'images/image_10.jpg', pos: 'object-center' } 
+                ],
+                hiddenClass: ['opacity-0', 'scale-110'] 
+            },
+            { 
+                id: 'gallery-img-6', 
+                images: [
+                    { src: 'images/image_6.jpg', pos: 'object-top' },   
+                    { src: 'images/image_11.jpg', pos: 'object-center' }
+                ],
+                hiddenClass: ['opacity-0', 'grayscale'] 
+            },
+            { 
+                id: 'gallery-img-7', 
+                images: [
+                    { src: 'images/image_7.jpg', pos: 'object-center' },   
+                    { src: 'images/image_12.jpg', pos: 'object-center' }
+                ],
+                hiddenClass: ['opacity-0', 'rotate-6'] 
+            }
+        ];
+
+        let currentIndex = 0;
+
+        setInterval(() => {
+            galleryConfig.forEach(item => {
+                const imgElement = document.getElementById(item.id);
+                if (!imgElement) return;
+
+                imgElement.classList.add(...item.hiddenClass);
+
+                setTimeout(() => {
+                    const nextImgIndex = (currentIndex + 1) % item.images.length;
+                    const nextImgData = item.images[nextImgIndex];
+                    
+                    imgElement.src = nextImgData.src;
+
+                    imgElement.classList.remove('object-center', 'object-top', 'object-bottom', 'object-left', 'object-right');
+                    imgElement.classList.add(nextImgData.pos || 'object-center');
+
+                    setTimeout(() => {
+                        imgElement.classList.remove(...item.hiddenClass);
+                    }, 50);
+
+                }, 1000); 
+            });
+            currentIndex++;
+        }, 3000); 
+
+        // 6. LIGHTBOX FEATURE (OPTIMIZED)
+        const allGalleryImages = [
+            'images/image_1.jpg', 'images/image_2.jpg', 'images/image_3.jpg', 
+            'images/image_4.jpg', 'images/image_5.jpg', 'images/image_6.jpg', 
+            'images/image_7.jpg', 'images/image_8.jpg', 'images/image_9.jpg', 
+            'images/image_10.jpg', 'images/image_11.jpg', 'images/image_12.jpg'
+        ];
+        
+        let currentLightboxIndex = 0;
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCounter = document.getElementById('lightbox-counter');
+
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            // Update image immediately without delay
+            lightboxImg.src = allGalleryImages[currentLightboxIndex];
+            lightboxCounter.innerText = `${currentLightboxIndex + 1} / ${allGalleryImages.length}`;
+            
+            lightbox.classList.remove('hidden');
+            // Small timeout to allow browser to render hidden removal before opacity transition
+            requestAnimationFrame(() => {
+                lightbox.classList.remove('opacity-0');
+            });
+            
+            document.body.style.overflow = 'hidden'; 
+            
+            // Preload neighbors
+            preloadImages(currentLightboxIndex);
+        }
+
+        function openLightboxFromId(imgId) {
+            const imgEl = document.getElementById(imgId);
+            if(imgEl) {
+                const currentSrc = imgEl.getAttribute('src'); 
+                let index = allGalleryImages.findIndex(src => src === currentSrc);
+                if (index === -1) index = 0;
+                openLightbox(index);
+            }
+        }
+
+        function closeLightbox() {
+            lightbox.classList.add('opacity-0');
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                document.body.style.overflow = 'auto'; 
+            }, 200); // Matches css transition duration
+        }
+
+        function navigateLightbox(step) {
+            // Fade out
+            lightboxImg.classList.add('opacity-0');
+
+            setTimeout(() => {
+                currentLightboxIndex += step;
+                if (currentLightboxIndex >= allGalleryImages.length) {
+                    currentLightboxIndex = 0;
+                } else if (currentLightboxIndex < 0) {
+                    currentLightboxIndex = allGalleryImages.length - 1;
+                }
+                
+                // Update image
+                lightboxImg.src = allGalleryImages[currentLightboxIndex];
+                lightboxCounter.innerText = `${currentLightboxIndex + 1} / ${allGalleryImages.length}`;
+
+                // Fade in
+                lightboxImg.classList.remove('opacity-0');
+                
+                // Preload next/prev
+                preloadImages(currentLightboxIndex);
+            }, 300); // Matches transition duration
+        }
+
+        // Helper to preload next and previous images
+        function preloadImages(index) {
+            const nextIndex = (index + 1) % allGalleryImages.length;
+            const prevIndex = (index - 1 + allGalleryImages.length) % allGalleryImages.length;
+            
+            const imgNext = new Image();
+            imgNext.src = allGalleryImages[nextIndex];
+            
+            const imgPrev = new Image();
+            imgPrev.src = allGalleryImages[prevIndex];
+        }
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('hidden')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navigateLightbox(-1);
+            if (e.key === 'ArrowRight') navigateLightbox(1);
+        });
+
+    </script>
+</body>
+</html>
