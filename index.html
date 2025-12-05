@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wedding Invitation | Ngọc Châu & Việt Anh</title>
     
-    <!-- CẬP NHẬT: Sử dụng file favicon.ico -->
+    <!-- FAVICON -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     <!-- Tailwind CSS -->
@@ -17,7 +17,8 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <!-- CẬP NHẬT: Sử dụng font Alex Brush (nét cọ viết tay) thay cho Pinyon Script -->
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
 
     <!-- Cấu hình Tailwind -->
     <script>
@@ -31,7 +32,8 @@
                         'cream': '#FDFBF7',
                     },
                     fontFamily: {
-                        'script': ['"Great Vibes"', 'cursive'],
+                        // CẬP NHẬT: Sử dụng Alex Brush
+                        'script': ['"Alex Brush"', 'cursive'],
                         'serif': ['"Cormorant Garamond"', 'serif'],
                         'sans': ['"Montserrat"', 'sans-serif'],
                     }
@@ -45,23 +47,6 @@
         body {
             background-color: #FDFBF7;
             overflow-x: hidden;
-        }
-
-        /* Hiệu ứng Parallax cho Hero */
-        .parallax-bg {
-            background-image: url('bgr.jpg'); /* Ảnh mặc định cho PC */
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
-        /* CẬP NHẬT: Responsive Background cho Mobile */
-        @media (max-width: 768px) {
-            .parallax-bg {
-                background-image: url('bgr-mobile.jpg'); /* Ảnh dọc cho mobile */
-                background-attachment: scroll; /* Tắt fixed trên mobile để tránh lỗi giật hình trên iOS */
-            }
         }
 
         /* Custom Text Shadow */
@@ -184,9 +169,18 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-3px); }
         }
+
+        /* MAGAZINE STYLE HERO */
+        .magazine-card {
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+        /* Hiệu ứng cái nơ */
+        .bow-decoration {
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
     </style>
 </head>
-<body class="text-wedding-dark antialiased font-serif">
+<body class="text-wedding-dark antialiased font-serif bg-[#FDFBF7]">
 
     <!-- Music Player Control -->
     <div class="fixed bottom-6 right-6 z-50 flex flex-col items-center justify-center">
@@ -208,29 +202,93 @@
     <!-- Hoa rơi container -->
     <div id="petals-container"></div>
 
-    <!-- 1. HERO SECTION -->
-    <header class="parallax-bg h-screen relative flex items-center justify-center text-center px-4">
-        <!-- Overlay tối hơn để nổi chữ -->
-        <div class="absolute inset-0 bg-black/60"></div> 
+    <!-- 1. HERO SECTION (MAGAZINE STYLE - RESPONSIVE SPLIT) -->
+    <header class="min-h-screen relative flex items-center justify-center px-4 py-10 md:py-0 md:px-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')]">
         
-        <div class="relative z-10 text-white animate-fade-in-up">
-            <p class="text-xl md:text-2xl tracking-[0.2em] uppercase font-light mb-4 reveal active">Save The Date</p>
+        <!-- Container chính: Vertical trên Mobile, Horizontal trên PC -->
+        <div class="magazine-card bg-white w-full max-w-md md:max-w-6xl md:h-[90vh] md:flex md:items-stretch rounded-none md:rounded-3xl overflow-hidden shadow-2xl transform transition-all duration-1000 animate-fade-in-up border border-gray-100 relative mx-auto my-auto">
             
-            <h1 class="font-script text-6xl md:text-8xl lg:text-9xl mb-2 text-wedding-pink text-glow reveal active" style="transition-delay: 0.2s;">
-                Ngọc Châu
-            </h1>
-            <div class="text-4xl md:text-5xl my-2 font-light text-wedding-gold text-glow reveal active" style="transition-delay: 0.4s;">&</div>
-            <h1 class="font-script text-6xl md:text-8xl lg:text-9xl mb-8 text-wedding-pink text-glow reveal active" style="transition-delay: 0.6s;">
-                Việt Anh
-            </h1>
+            <!-- PHẦN HÌNH ẢNH (Có xử lý ảnh riêng cho Mobile/PC) -->
+            <div class="md:w-1/2 relative h-[50vh] md:h-full overflow-hidden bg-gray-100">
+                <!-- CẬP NHẬT: Dùng thẻ picture để tự động đổi ảnh -->
+                <picture class="w-full h-full block">
+                    <!-- Ảnh cho Mobile (màn hình < 768px) -->
+                    <source media="(max-width: 767px)" srcset="bgr-mobile.jpg">
+                    <!-- Ảnh cho PC (mặc định) -->
+                    <source media="(min-width: 768px)" srcset="bgr.jpg">
+                    <!-- Fallback img tag -->
+                    <img src="bgr.jpg" 
+                         alt="Wedding Couple" 
+                         class="w-full h-full object-cover object-center hover:scale-105 transition duration-1000">
+                </picture>
+                
+                <!-- Tag ngày cưới (Chỉ hiện trên ảnh ở mobile) -->
+                <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/50 to-transparent p-6 md:hidden">
+                    <p class="text-white text-center font-serif tracking-widest text-sm uppercase font-bold">
+                        Save The Date
+                    </p>
+                </div>
+            </div>
 
-            <div class="inline-block border-t border-b border-white/50 py-4 px-8 mt-6 backdrop-blur-sm bg-white/10 rounded-lg reveal active" style="transition-delay: 0.8s;">
-                <p class="text-2xl md:text-3xl font-semibold text-shadow-md">20 . 12 . 2025</p>
-                <p class="text-sm md:text-base mt-2 tracking-widest uppercase text-shadow-md">Thung Lũng Hoa Hồ Tây, Hà Nội</p>
+            <!-- PHẦN NỘI DUNG (Trên mobile: Bottom, Trên PC: Right 50%) -->
+            <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center items-center text-center relative bg-white">
+                
+                <!-- Cái nơ trang trí -->
+                <div class="w-32 md:w-48 mb-6 bow-decoration opacity-90">
+                    <img src="https://pngimg.com/d/ribbon_PNG1523.png" alt="Wedding Bow" class="w-full h-auto">
+                </div>
+
+                <!-- Tên cặp đôi -->
+                <div class="mb-8 relative">
+                    <!-- Font chữ Alex Brush mới được áp dụng -->
+                    <h1 class="font-script text-6xl md:text-8xl text-wedding-dark leading-tight drop-shadow-sm">
+                        Ngọc Châu
+                        <span class="block text-4xl md:text-5xl text-wedding-gold my-2">&</span>
+                        Việt Anh
+                    </h1>
+                </div>
+
+                <!-- Thông tin chi tiết -->
+                <div class="space-y-4 border-t border-b border-gray-100 py-8 w-full max-w-xs md:max-w-md">
+                    <div class="flex items-center justify-center gap-4 text-wedding-gold mb-4">
+                        <i class="fas fa-heart text-sm animate-pulse"></i>
+                    </div>
+                    
+                    <h2 class="text-2xl md:text-3xl font-bold text-wedding-dark font-serif uppercase">
+                        Chủ Nhật
+                    </h2>
+                    <div class="flex items-center justify-center gap-2 text-4xl md:text-5xl font-bold text-wedding-dark font-sans">
+                        <span>21</span>
+                        <span class="text-wedding-gold">.</span>
+                        <span>12</span>
+                        <span class="text-wedding-gold">.</span>
+                        <span>2025</span>
+                    </div>
+                    <p class="text-lg md:text-xl font-medium text-gray-600 mt-2">
+                        Vào lúc 08:30
+                    </p>
+                    <p class="text-sm text-gray-800 font-bold uppercase tracking-wider mt-4">
+                        Xóm trại, Phú Mỹ, Ngọc Mỹ, Quốc Oai, Hà Nội
+                    </p>
+                </div>
+
+                <!-- Lời mời -->
+                <p class="mt-8 text-gray-500 italic text-sm md:text-base max-w-xs">
+                    "Sự hiện diện của bạn là niềm vinh hạnh lớn lao của gia đình chúng tôi."
+                </p>
+
+                <!-- Trang trí góc (Cây cỏ) -->
+                <div class="absolute top-0 right-0 w-32 h-32 opacity-20 pointer-events-none">
+                     <img src="https://www.pngmart.com/files/1/Green-Leaves-PNG-File.png" class="w-full h-full object-contain">
+                </div>
+                <div class="absolute bottom-0 left-0 w-32 h-32 opacity-20 pointer-events-none transform rotate-180">
+                     <img src="https://www.pngmart.com/files/1/Green-Leaves-PNG-File.png" class="w-full h-full object-contain">
+                </div>
             </div>
         </div>
 
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-white/80">
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce text-wedding-dark/50 md:text-gray-400">
             <i class="fas fa-chevron-down text-2xl"></i>
         </div>
     </header>
@@ -276,9 +334,8 @@
                 </div>
             </div>
 
-            <!-- CẬP NHẬT: Thêm Lịch Tháng 12/2025 -->
+            <!-- Lịch Tháng 12/2025 -->
             <div class="max-w-md mx-auto bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-wedding-gold/30 relative overflow-hidden reveal">
-                <!-- Trang trí góc lịch -->
                 <div class="absolute top-0 right-0 w-16 h-16 bg-wedding-gold/10 rounded-bl-full"></div>
                 <div class="absolute bottom-0 left-0 w-16 h-16 bg-wedding-gold/10 rounded-tr-full"></div>
 
@@ -295,7 +352,7 @@
                 </div>
 
                 <div class="grid grid-cols-7 gap-2 text-sm md:text-base text-gray-700 font-medium">
-                    <!-- Tuần 1: 01/12 là Thứ 2 -->
+                    <!-- Tuần 1 -->
                     <div class="calendar-day">1</div>
                     <div class="calendar-day">2</div>
                     <div class="calendar-day">3</div>
@@ -319,9 +376,7 @@
                     <div class="calendar-day">17</div>
                     <div class="calendar-day">18</div>
                     <div class="calendar-day">19</div>
-                    <!-- Ngày 20: Lễ Ăn Hỏi -->
                     <div class="calendar-day calendar-highlight">20</div>
-                    <!-- Ngày 21: Lễ Vu Quy -->
                     <div class="calendar-day calendar-highlight bg-wedding-pink text-wedding-dark !text-wedding-dark">21</div>
 
                     <!-- Tuần 4 -->
@@ -345,7 +400,6 @@
                 
                 <div class="mt-6 text-sm flex justify-center gap-4">
                     <div class="flex items-center"><span class="w-3 h-3 bg-wedding-gold rounded-full inline-block mr-2"></span> Ngày Hạnh Phúc</div>
-                    <!-- <div class="flex items-center"><span class="w-3 h-3 bg-wedding-pink rounded-full inline-block mr-2 border border-gray-200"></span> Lễ Vu Quy</div> -->
                 </div>
             </div>
 
@@ -484,7 +538,6 @@
                     <div class="bg-white p-6 rounded-2xl shadow-inner border border-gray-100 h-full flex flex-col">
                         <h3 class="font-serif text-2xl mb-6 text-wedding-dark font-bold border-b pb-4"><i class="fas fa-heart text-wedding-pink mr-2"></i> Lời chúc mới nhất</h3>
                         <div id="wishes-container" class="flex-1 overflow-y-auto pr-2 space-y-4 max-h-[400px] scroll-smooth">
-                            <!-- Loading Indicator ban đầu -->
                             <div id="wishes-loading" class="text-center text-gray-500 italic py-4">
                                 <i class="fas fa-spinner fa-spin mr-2"></i> Đang tải lời chúc...
                             </div>
@@ -537,7 +590,7 @@
         document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
         // 2. COUNTDOWN
-        const weddingDate = new Date("2025-12-20T16:00:00").getTime();
+        const weddingDate = new Date("2025-12-21T08:30:00").getTime();
         function updateCountdown() {
             const now = new Date().getTime();
             const diff = weddingDate - now;
@@ -591,12 +644,10 @@
         function playRandomSong() {
             const randomIndex = Math.floor(Math.random() * playlist.length);
             audio.src = playlist[randomIndex];
-            // Fix: Check if play returns a promise
             const playPromise = audio.play();
             if (playPromise !== undefined) {
                 return playPromise;
             }
-            // If browser doesn't return promise, assume it works or fires error event
             return Promise.resolve();
         }
 
@@ -610,7 +661,6 @@
             setTimeout(() => { note.remove(); }, 2000); 
         }
 
-        // Add error listener to audio element to catch loading errors and stop UI
         audio.addEventListener('error', function(e) {
             console.warn("Không thể tải file nhạc. Vui lòng kiểm tra thư mục musics/.", e);
             isPlaying = false;
@@ -778,17 +828,12 @@
             if (e.key === 'ArrowRight') navigateLightbox(1);
         });
 
-        // --- CẤU HÌNH GOOGLE SCRIPT URL ---
+        // --- GOOGLE SHEETS INTEGRATION ---
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzBCL9imkKgsu8Tro1gJBp5t_TE5-5Ej3YTCTlZPHsB-apWApkanDI-v5D51T82HJyGvg/exec"; 
 
-        // Hàm tính thời gian tương đối - SỬA LỖI PARSE
         function timeAgo(dateStr) {
             if (!dateStr) return "Vừa xong";
-            
-            // Xử lý cả format ISO (Google Sheet trả về) và custom format
-            let past = new Date(dateStr); // Thử parse chuẩn ISO 8601
-
-            // Nếu parse thất bại (NaN), thử parse thủ công format "dd/MM/yyyy HH:mm:ss"
+            let past = new Date(dateStr); 
             if (isNaN(past.getTime())) {
                 const parts = dateStr.split(' ');
                 if (parts.length >= 2) {
@@ -799,8 +844,6 @@
                     }
                 }
             }
-            
-            // Nếu vẫn không được thì trả về nguyên gốc
             if (isNaN(past.getTime())) return dateStr;
 
             const now = new Date();
@@ -822,7 +865,6 @@
             const wishItem = document.createElement('div');
             const borderColors = ['border-wedding-gold', 'border-wedding-pink', 'border-blue-300', 'border-green-300'];
             const randomBorder = borderColors[Math.floor(Math.random() * borderColors.length)];
-            
             const animateClass = isNew ? 'animate-fade-in-up' : '';
             
             wishItem.className = `bg-white p-5 rounded-xl border-l-4 ${randomBorder} relative shadow-md ${animateClass} transform transition-all duration-500 mb-4`;
@@ -832,7 +874,6 @@
                 displayTime = timeAgo(timeStr);
             }
 
-            // Tăng cỡ chữ: Tên (text-lg), Lời chúc (text-base), Thời gian (text-sm)
             wishItem.innerHTML = `
                 <i class="fas fa-quote-right absolute top-4 right-4 text-wedding-pink/30 text-3xl"></i>
                 <h4 class="font-bold text-wedding-dark text-lg mb-2">${name}</h4>
@@ -842,7 +883,6 @@
             return wishItem;
         }
 
-        // Hàm tải danh sách lời chúc (Load Data)
         function loadWishes() {
             if (!GOOGLE_SCRIPT_URL) return;
 
@@ -852,13 +892,11 @@
             fetch(GOOGLE_SCRIPT_URL)
                 .then(response => response.json())
                 .then(data => {
-                    // Xóa loading
                     if (loading) loading.remove();
                     container.innerHTML = '';
                     
                     if (data && data.length > 0) {
                         data.forEach(item => {
-                            // item.name, item.message, item.time khớp với JSON từ doGet
                             const wishNode = renderWishItem(item.name, item.message, item.time, false);
                             container.appendChild(wishNode);
                         });
@@ -887,10 +925,8 @@
             submitBtn.innerText = 'Đang gửi...';
             submitBtn.disabled = true;
 
-            // Hiển thị ngay lập tức (Optimistic UI)
             const wishItem = renderWishItem(name, msg, null, true);
             
-            // Xóa thông báo "Chưa có lời chúc" hoặc Loading nếu còn
             if (container.children.length === 1 && container.children[0].classList.contains('text-center')) {
                  container.innerHTML = '';
             }
@@ -932,10 +968,9 @@
             }
         }
 
-        // Khởi tạo khi trang load
         window.addEventListener('load', function() {
             attemptAutoplay();
-            loadWishes(); // Gọi hàm tải lời chúc
+            loadWishes(); 
         });
     </script>
 </body>
