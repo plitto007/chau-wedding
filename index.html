@@ -149,6 +149,41 @@
 
         /* Lightbox transition optimized */
         .lightbox-fade { transition: opacity 0.2s ease-in-out; }
+
+        /* Calendar specific styles */
+        .calendar-day {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        .calendar-day:hover:not(.empty) {
+            background-color: #FDE8E8;
+            color: #C5A059;
+            cursor: default;
+        }
+        .calendar-highlight {
+            background-color: #E8C675 !important;
+            color: white !important;
+            box-shadow: 0 4px 6px rgba(232, 198, 117, 0.4);
+            position: relative;
+        }
+        .calendar-highlight::after {
+            content: '❤️';
+            position: absolute;
+            top: -10px;
+            right: -5px;
+            font-size: 10px;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
     </style>
 </head>
 <body class="text-wedding-dark antialiased font-serif">
@@ -216,11 +251,13 @@
         </div>
     </section>
 
-    <!-- 3. COUNTDOWN -->
+    <!-- 3. COUNTDOWN & CALENDAR -->
     <section class="py-16 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] bg-wedding-pink/20">
         <div class="container mx-auto px-4 text-center reveal">
             <h2 class="font-script text-5xl md:text-6xl text-wedding-dark mb-12">Cùng đếm ngược giây phút hạnh phúc</h2>
-            <div id="countdown" class="flex flex-wrap justify-center gap-6 md:gap-10">
+            
+            <!-- Đồng hồ đếm ngược -->
+            <div id="countdown" class="flex flex-wrap justify-center gap-6 md:gap-10 mb-16">
                 <div class="bg-white/80 backdrop-blur rounded-full w-24 h-24 md:w-32 md:h-32 flex flex-col justify-center items-center shadow-xl border border-white">
                     <span id="days" class="text-3xl md:text-4xl font-bold text-wedding-gold">00</span>
                     <span class="text-xs uppercase tracking-wide mt-1">Ngày</span>
@@ -238,6 +275,80 @@
                     <span class="text-xs uppercase tracking-wide mt-1">Giây</span>
                 </div>
             </div>
+
+            <!-- CẬP NHẬT: Thêm Lịch Tháng 12/2025 -->
+            <div class="max-w-md mx-auto bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-wedding-gold/30 relative overflow-hidden reveal">
+                <!-- Trang trí góc lịch -->
+                <div class="absolute top-0 right-0 w-16 h-16 bg-wedding-gold/10 rounded-bl-full"></div>
+                <div class="absolute bottom-0 left-0 w-16 h-16 bg-wedding-gold/10 rounded-tr-full"></div>
+
+                <h3 class="font-serif text-2xl text-wedding-dark mb-6 font-bold border-b border-gray-100 pb-4">Tháng 12 / 2025</h3>
+                
+                <div class="grid grid-cols-7 gap-2 mb-2">
+                    <div class="text-xs font-bold text-gray-400 uppercase tracking-wider">T2</div>
+                    <div class="text-xs font-bold text-gray-400 uppercase tracking-wider">T3</div>
+                    <div class="text-xs font-bold text-gray-400 uppercase tracking-wider">T4</div>
+                    <div class="text-xs font-bold text-gray-400 uppercase tracking-wider">T5</div>
+                    <div class="text-xs font-bold text-gray-400 uppercase tracking-wider">T6</div>
+                    <div class="text-xs font-bold text-wedding-gold uppercase tracking-wider">T7</div>
+                    <div class="text-xs font-bold text-red-400 uppercase tracking-wider">CN</div>
+                </div>
+
+                <div class="grid grid-cols-7 gap-2 text-sm md:text-base text-gray-700 font-medium">
+                    <!-- Tuần 1: 01/12 là Thứ 2 -->
+                    <div class="calendar-day">1</div>
+                    <div class="calendar-day">2</div>
+                    <div class="calendar-day">3</div>
+                    <div class="calendar-day">4</div>
+                    <div class="calendar-day">5</div>
+                    <div class="calendar-day font-bold text-wedding-gold">6</div>
+                    <div class="calendar-day font-bold text-red-400">7</div>
+
+                    <!-- Tuần 2 -->
+                    <div class="calendar-day">8</div>
+                    <div class="calendar-day">9</div>
+                    <div class="calendar-day">10</div>
+                    <div class="calendar-day">11</div>
+                    <div class="calendar-day">12</div>
+                    <div class="calendar-day font-bold text-wedding-gold">13</div>
+                    <div class="calendar-day font-bold text-red-400">14</div>
+
+                    <!-- Tuần 3 -->
+                    <div class="calendar-day">15</div>
+                    <div class="calendar-day">16</div>
+                    <div class="calendar-day">17</div>
+                    <div class="calendar-day">18</div>
+                    <div class="calendar-day">19</div>
+                    <!-- Ngày 20: Lễ Ăn Hỏi -->
+                    <div class="calendar-day calendar-highlight">20</div>
+                    <!-- Ngày 21: Lễ Vu Quy -->
+                    <div class="calendar-day calendar-highlight bg-wedding-pink text-wedding-dark !text-wedding-dark">21</div>
+
+                    <!-- Tuần 4 -->
+                    <div class="calendar-day">22</div>
+                    <div class="calendar-day">23</div>
+                    <div class="calendar-day">24</div>
+                    <div class="calendar-day">25</div>
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day font-bold text-wedding-gold">27</div>
+                    <div class="calendar-day font-bold text-red-400">28</div>
+
+                    <!-- Tuần 5 -->
+                    <div class="calendar-day">29</div>
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day">31</div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                    <div class="calendar-day empty"></div>
+                </div>
+                
+                <div class="mt-6 text-sm flex justify-center gap-4">
+                    <div class="flex items-center"><span class="w-3 h-3 bg-wedding-gold rounded-full inline-block mr-2"></span> Ngày Hạnh Phúc</div>
+                    <!-- <div class="flex items-center"><span class="w-3 h-3 bg-wedding-pink rounded-full inline-block mr-2 border border-gray-200"></span> Lễ Vu Quy</div> -->
+                </div>
+            </div>
+
         </div>
     </section>
 
