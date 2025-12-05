@@ -49,11 +49,19 @@
 
         /* Hiệu ứng Parallax cho Hero */
         .parallax-bg {
-            background-image: url('bgr.jpg');
+            background-image: url('bgr.jpg'); /* Ảnh mặc định cho PC */
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+        }
+
+        /* CẬP NHẬT: Responsive Background cho Mobile */
+        @media (max-width: 768px) {
+            .parallax-bg {
+                background-image: url('bgr-mobile.jpg'); /* Ảnh dọc cho mobile */
+                background-attachment: scroll; /* Tắt fixed trên mobile để tránh lỗi giật hình trên iOS */
+            }
         }
 
         /* Custom Text Shadow */
@@ -167,6 +175,7 @@
 
     <!-- 1. HERO SECTION -->
     <header class="parallax-bg h-screen relative flex items-center justify-center text-center px-4">
+        <!-- Overlay tối hơn để nổi chữ -->
         <div class="absolute inset-0 bg-black/60"></div> 
         
         <div class="relative z-10 text-white animate-fade-in-up">
@@ -182,7 +191,7 @@
 
             <div class="inline-block border-t border-b border-white/50 py-4 px-8 mt-6 backdrop-blur-sm bg-white/10 rounded-lg reveal active" style="transition-delay: 0.8s;">
                 <p class="text-2xl md:text-3xl font-semibold text-shadow-md">20 . 12 . 2025</p>
-                <p class="text-sm md:text-base mt-2 tracking-widest uppercase text-shadow-md">Xóm Trại, Phú Mỹ, Ngọc Mỹ, Quốc Oai, Hà Nội</p>
+                <p class="text-sm md:text-base mt-2 tracking-widest uppercase text-shadow-md">Thung Lũng Hoa Hồ Tây, Hà Nội</p>
             </div>
         </div>
 
