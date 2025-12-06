@@ -213,7 +213,8 @@
                 <!-- CẬP NHẬT: Dùng thẻ picture để tự động đổi ảnh -->
                 <picture class="w-full h-full block">
                     <!-- Ảnh cho Mobile (màn hình < 768px) -->
-                    <source media="(max-width: 767px)" srcset="bgr-mobile.jpg">
+                    <!-- <source media="(max-width: 767px)" srcset="bgr-mobile.jpg"> -->
+                    <source media="(max-width: 767px)" srcset="bgr.jpg">
                     <!-- Ảnh cho PC (mặc định) -->
                     <source media="(min-width: 768px)" srcset="bgr.jpg">
                     <!-- Fallback img tag -->
@@ -234,38 +235,44 @@
             <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center items-center text-center relative bg-white">
                 
                 <!-- Cái nơ trang trí -->
-                <div class="w-32 md:w-48 mb-6 bow-decoration opacity-90">
+                <!-- <div class="w-32 md:w-48 mb-6 bow-decoration opacity-90">
                     <img src="https://pngimg.com/d/ribbon_PNG1523.png" alt="Wedding Bow" class="w-full h-auto">
-                </div>
+                </div> -->
 
                 <!-- Tên cặp đôi -->
                 <div class="mb-8 relative">
                     <!-- Font chữ Alex Brush mới được áp dụng -->
-                    <h1 class="font-script text-6xl md:text-8xl text-wedding-dark leading-tight drop-shadow-sm">
+                    <h1 class="font-script text-3xl md:text-8xl text-wedding-dark leading-tight drop-shadow-sm">
                         Ngọc Châu
-                        <span class="block text-4xl md:text-5xl text-wedding-gold my-2">&</span>
+                        <span class="block text-3xl md:text-5xl text-wedding-gold my-2">&</span>
                         Việt Anh
                     </h1>
                 </div>
 
                 <!-- Thông tin chi tiết -->
-                <div class="space-y-4 border-t border-b border-gray-100 py-8 w-full max-w-xs md:max-w-md">
-                    <div class="flex items-center justify-center gap-4 text-wedding-gold mb-4">
+                <div class="space-y-4 border-t border-b border-gray-100 py-4 w-full max-w-xs md:max-w-md">
+                    <!-- <span class="flex items-center justify-center gap-4 text-wedding-gold mb-4">
                         <i class="fas fa-heart text-sm animate-pulse"></i>
-                    </div>
+                    </span> -->
+                    <h1 class="text-2xl md:text-3xl font-bold text-wedding-dark font-serif uppercase">
+                        THƯ MỜI TIỆC CƯỚI
+                    </h1>
+                    <span class="flex items-center justify-center gap-4 text-wedding-gold mb-4"></span>
+                        <i class="fas fa-heart text-sm animate-pulse"></i>
+                    </span>
                     
                     <h2 class="text-2xl md:text-3xl font-bold text-wedding-dark font-serif uppercase">
                         Chủ Nhật
                     </h2>
                     <div class="flex items-center justify-center gap-2 text-4xl md:text-5xl font-bold text-wedding-dark font-sans">
-                        <span>21</span>
+                        <span>20</span>
                         <span class="text-wedding-gold">.</span>
                         <span>12</span>
                         <span class="text-wedding-gold">.</span>
                         <span>2025</span>
                     </div>
                     <p class="text-lg md:text-xl font-medium text-gray-600 mt-2">
-                        Vào lúc 08:30
+                        Vào lúc 16:00
                     </p>
                     <p class="text-sm text-gray-800 font-bold uppercase tracking-wider mt-4">
                         Xóm trại, Phú Mỹ, Ngọc Mỹ, Quốc Oai, Hà Nội
@@ -273,7 +280,7 @@
                 </div>
 
                 <!-- Lời mời -->
-                <p class="mt-8 text-gray-500 italic text-sm md:text-base max-w-xs">
+                <p class="mt-4 text-gray-500 italic text-sm md:text-base max-w-xs">
                     "Sự hiện diện của bạn là niềm vinh hạnh lớn lao của gia đình chúng tôi."
                 </p>
 
@@ -376,8 +383,8 @@
                     <div class="calendar-day">17</div>
                     <div class="calendar-day">18</div>
                     <div class="calendar-day">19</div>
-                    <div class="calendar-day calendar-highlight">20</div>
-                    <div class="calendar-day calendar-highlight bg-wedding-pink text-wedding-dark !text-wedding-dark">21</div>
+                    <div class="calendar-day calendar-highlight bg-wedding-pink text-wedding-dark !text-wedding-dark">20</div>
+                    <div class="calendar-day">21</div>
 
                     <!-- Tuần 4 -->
                     <div class="calendar-day">22</div>
@@ -409,42 +416,39 @@
     <!-- 4. EVENTS -->
     <section class="py-20 md:py-32 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="font-script text-5xl md:text-7xl text-center text-wedding-gold mb-20 reveal">Sự Kiện Chính</h2>
+            <h2 class="font-script text-5xl md:text-7xl text-center text-wedding-gold mb-5 reveal">Địa điểm tổ chức</h2>
             
             <div class="relative max-w-4xl mx-auto">
-                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gray-200 hidden md:block"></div>
+                <!-- <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gray-200 hidden md:block"></div> -->
 
                 <!-- Event 1: Lễ Ăn Hỏi -->
                 <div class="relative md:flex justify-between items-center mb-16 md:mb-24 reveal">
-                    <div class="md:w-5/12 text-center md:text-right order-1 pr-0 md:pr-10">
-                        <div class="inline-block p-2 border border-wedding-gold rounded-full mb-4">
+                    <div class="text-center pr-0">
+                        <!-- <div class="inline-block p-2 border border-wedding-gold rounded-full mb-4">
                             <i class="fas fa-glass-cheers text-2xl text-wedding-gold w-8 h-8 flex items-center justify-center"></i>
-                        </div>
-                        <h3 class="text-3xl font-bold mb-2 text-gray-800">Lễ Ăn Hỏi</h3>
+                        </div> -->
                         <p class="font-sans text-wedding-gold font-bold mb-2">16:00 PM - 20/12/2025</p>
-                        <p class="text-gray-600 mb-4">Tư gia nhà gái.<br>Nghi thức truyền thống ấm cúng cùng gia đình.</p>
-                        <a href="https://maps.app.goo.gl/5qaXTtw1h9QcZWaVA" target="_blank" class="inline-block px-6 py-2 border border-wedding-dark hover:bg-wedding-dark hover:text-white transition duration-300 rounded-full text-sm uppercase tracking-wider">Xem Bản Đồ</a>
-                    </div>
-                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-wedding-gold rounded-full border-4 border-white shadow-md z-10"></div>
-                    <div class="md:w-5/12 order-2 mt-6 md:mt-0 pl-0 md:pl-10">
-                        <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Lễ Ăn Hỏi" class="rounded-lg shadow-lg w-full h-64 object-cover hover:scale-105 transition duration-500">
-                    </div>
-                </div>
+                        <p class="font-sans text-wedding-gold font-bold mb-10">Xóm Trại - Phú Mỹ - Ngọc Mỹ - Quốc Oai</p>
+                        <a href="https://www.google.com/maps/place/HT+Mart+Ph%C3%BA+M%E1%BB%B9/@20.9846403,105.6261473,19z/data=!4m15!1m8!3m7!1s0x313450f7148310cd:0x8faea1268d8ab57d!2zUGjDuiBN4bu5LCBRdeG7kWMgT2FpLCBIw6AgTuG7mWk!3b1!8m2!3d20.9857417!4d105.6273238!16s%2Fg%2F1tgz7trk!3m5!1s0x313451a904d77293:0x7259488782a7ca77!8m2!3d20.9848964!4d105.6257892!16s%2Fg%2F11l2wqnn6s?entry=ttu&g_ep=EgoyMDI1MTIwMi4wIKXMDSoASAFQAw%3D%3D"
+                            target="_blank"
+                            class="relative block w-full">  <!-- Thêm relative và block -->
+                            
+                            <img style="border-radius: 20px; position: relative" 
+                                    src="Ảnh màn hình 2025-12-06 lúc 00.08.25.png" 
+                                    loading="lazy" 
+                                    class="w-full h-full object-cover block">  <!-- Thêm block -->
+                            
+                            <!-- Text overlay ở chính giữa ảnh, giống button -->
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="inline-block border-2 border-wedding-gold text-wedding-dark 
+                                            hover:bg-wedding-gold hover:text-white py-3 px-8 rounded-full 
+                                            font-sans tracking-widest text-sm uppercase transition duration-300 
+                                            transform hover:scale-105 pointer-events-none bg-white text-wedding-gold font-bold">  <!-- pointer-events-none để không block click link -->
+                                Xem Bản Đồ
+                                </div>
+                            </div>
+                            </a>
 
-                <!-- Event 2: Lễ Vu Quy -->
-                <div class="relative md:flex justify-between items-center reveal">
-                    <div class="md:w-5/12 order-2 md:order-1 mt-6 md:mt-0 pr-0 md:pr-10">
-                         <img src="https://images.unsplash.com/photo-1715521801560-f1183fa95199?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Lễ Vu Quy" class="rounded-lg shadow-lg w-full h-64 object-cover hover:scale-105 transition duration-500">
-                    </div>
-                    <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-wedding-gold rounded-full border-4 border-white shadow-md z-10"></div>
-                    <div class="md:w-5/12 text-center md:text-left order-1 md:order-2 pl-0 md:pl-10">
-                        <div class="inline-block p-2 border border-wedding-gold rounded-full mb-4">
-                            <i class="fas fa-utensils text-2xl text-wedding-gold w-8 h-8 flex items-center justify-center"></i>
-                        </div>
-                        <h3 class="text-3xl font-bold mb-2 text-gray-800">Lễ Vu Quy</h3>
-                        <p class="font-sans text-wedding-gold font-bold mb-2">08:30 AM - 21/12/2025</p>
-                        <p class="text-gray-600 mb-4">Trung tâm tiệc cưới Thung Lũng Hoa Hồ Tây.<br>Kính mời quý khách tham dự bữa tiệc thân mật.</p>
-                        <a href="https://maps.app.goo.gl/V8JybfmnszpTDvu48" target="_blank" class="inline-block px-6 py-2 border border-wedding-dark hover:bg-wedding-dark hover:text-white transition duration-300 rounded-full text-sm uppercase tracking-wider">Xem Bản Đồ</a>
                     </div>
                 </div>
             </div>
@@ -531,6 +535,26 @@
                                 Gửi Lời Chúc
                             </button>
                         </form>
+                        <button type="submit" 
+                            class="mt-4 w-full bg-wedding-gold text-white font-bold py-3 rounded-lg hover:bg-wedding-gold transition duration-300 shadow-md"
+                            onclick="openImagePopup('images/qrcode.jpeg')">
+                            Gửi Mừng Cưới
+                        </button>
+                        <div id="imagePopup" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4">
+                            <div class="relative max-w-4xl max-h-[90vh] w-full">
+                                <!-- Nút đóng -->
+                                <button onclick="closeImagePopup()" 
+                                        class="absolute -top-12 right-0 text-white text-2xl hover:text-wedding-gold z-10">
+                                    ✕
+                                </button>
+                                
+                                <!-- Ảnh popup -->
+                                <img id="popupImage" 
+                                        src="" 
+                                        alt="Ảnh chúc mừng" 
+                                        class="w-full h-auto max-h-[90vh] object-contain rounded-lg shadow-2xl">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -967,6 +991,32 @@
                 }, 500);
             }
         }
+
+        // open modal 
+        function openImagePopup(imageSrc) {
+            const popup = document.getElementById('imagePopup');
+            const popupImg = document.getElementById('popupImage');
+            popupImg.src = imageSrc;
+            popup.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Ngăn scroll background
+        }
+
+        function closeImagePopup() {
+            const popup = document.getElementById('imagePopup');
+            popup.classList.add('hidden');
+            document.body.style.overflow = ''; // Khôi phục scroll
+        }
+
+        // Đóng popup khi click background
+        document.getElementById('imagePopup').addEventListener('click', function(e) {
+            if (e.target === this) closeImagePopup();
+        });
+
+        // Đóng popup bằng phím ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeImagePopup();
+        });
+
 
         window.addEventListener('load', function() {
             attemptAutoplay();
